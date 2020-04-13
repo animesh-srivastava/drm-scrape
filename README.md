@@ -1,7 +1,7 @@
 # DRM Assignment Scraper
 
 This is a pretty basic script
-
+![](usage.gif)
 Steps to use
 - Install python on your system. (Version > 3.7.0)
 - Install the following libraries in your system. 

@@ -43,24 +43,39 @@ def get_data(ticker,start,end):
         pass
 
 def Main():
-    parser = argparse.ArgumentParser(prog='A small client to scrape historical data from NSE website')
-    parser.add_argument("symbol", help="The symbol of stock in NSE", type=str)
-    parser.add_argument("year",help="The period for which data is required. Following methods work - 3d for three days, 2w for two weeks, 3m for three months and 5y for five years",type=str)
-    parser.add_argument('--version', '-v', action='version', version='%(prog)s 2.0')
+    parser = argparse.ArgumentParser(prog='A small client to scrape historical data of stock prices from NSE website. Head over to www.github.com/animesh-srivastava/drm-scrape for more information.')
+    parser.add_argument("symbol", help="The company symbol or ticker.", type=str)
+    parser.add_argument("-p","--period",help="The period for which data is required. Following methods work - 3d for three days, 2w for two weeks, 3m for three months and 5y for five years.",type=str)
+    parser.add_argument('--version', '-v', action='version', version='%(prog)s 2.0.1')
+    parser.add_argument("-s","--start",default = str(date.today()-timedelta(days=365)),help="Specify the starting date in YYYY-MM-DD.",action='store')
+    parser.add_argument("-e","--end", default=str(date.today()),help="Specify the ending date in YYYY-MM-DD.",action='store')
     args = parser.parse_args()
-    print(args)
-    try:
-        if args.year[-1]=='y':
-            get_data(args.symbol,str(date.today()-timedelta(days=int(args.year[:-1])*365)),end=date.today())
-        elif args.year[-1]=='m':
-            get_data(args.symbol,str(date.today()-timedelta(days=int(args.year[:-1])*30)),end=date.today())
-        elif args.year[-1]=='w':
-            get_data(args.symbol,str(date.today()-timedelta(days=int(args.year[:-1])*7)),end=date.today())
-        elif args.year[-1]=='d':
-            get_data(args.symbol,str(date.today()-timedelta(days=int(args.year[:-1]))),end=date.today())
-    except ValueError:
-        print("Error with period formatting, please try again")
-
+    if args.period and not(args.start and args.end):
+        try:
+            if args.period[-1]=='y':
+                get_data(args.symbol, start=str(date.today()-timedelta(days=int(args.period[:-1])*365)), end=date.today())
+            elif args.period[-1]=='m':
+                get_data(args.symbol,start=str(date.today()-timedelta(days=int(args.period[:-1])*30)), end=date.today())
+            elif args.period[-1]=='w':
+                get_data(args.symbol,start=str(date.today()-timedelta(days=int(args.period[:-1])*7)), end=date.today())
+            elif args.period[-1]=='d':
+                get_data(args.symbol,start=str(date.today()-timedelta(days=int(args.period[:-1]))), end=date.today())
+        except ValueError:
+            print("Error with time period provided, please try again.")
+    elif args.start and args.end and not(args.period):
+        if (args.start)<=(args.end):
+            get_data(args.symbol,start=args.start,end=args.end)
+        else:
+            print("Ending date cannot be before than starting date.")
+    elif args.start and args.end and args.period:
+        print("Default precedence is Date Range")
+        if (args.start)<=(args.end):
+            get_data(args.symbol,start=args.start,end=args.end)
+        else:
+            print("Ending date cannot be before than starting date.")
+    elif not(args.start) and not(args.period) and not(args.end):
+        print("Proceeding with default values.")
+        get_data(args.symbol,start=args.start,end=args.end)
 if __name__ == "__main__":
     Main()
 

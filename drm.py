@@ -12,7 +12,6 @@ before running the script, install yfinance and pandas in your laptop by using t
 !pip install lxml
 You can also run this code in Google Colab (although that would be an overkill)
 '''
-
 import argparse
 import yfinance as yf
 import os
@@ -25,15 +24,15 @@ def get_data(ticker,start,end):
         os.mkdir("dataset")
     t = yf.Ticker(ticker+".NS")
     try:
-        data1 = t.history(interval="1d",start=start,end=end)
+        data1 = t.history(interval="1d",start=start,end=end,actions=False)
         if data1.shape[0] != 0:
             data1.to_csv(cwd+"/dataset/"+ticker+"-DAILY.csv")
             print(f'Saved to {"./dataset/"+ticker+"-DAILY.csv"}')
-        data2 = t.history(interval="1wk",start=date(2019,1,1),end=date(2020,1,1))
+        data2 = t.history(interval="1wk",start=start,end=end,actions=False)
         if data2.shape[0] != 0:
             data2.to_csv(cwd+"/dataset/"+ticker+"-WEEKLY.csv")
             print(f'Saved to {"./dataset/"+ticker+"-WEEKLY.csv"}')
-        data3 = t.history(interval="1mo",start=date(2019,1,1),end=date(2020,1,1))
+        data3 = t.history(interval="1mo",start=start,end=end,actions=False)
         if data3.shape[0] != 0:
             data3.to_csv(cwd+"/dataset/"+ticker+"-MONTHLY.csv")
             print(f'Saved to {"./dataset/"+ticker+"-MONTHLY.csv"}')

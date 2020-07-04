@@ -1,4 +1,4 @@
-# DRM Assignment Scraper
+# Scrape historical stock prices from Yahoo Finance website
 
 This is a pretty basic script
 ![](usage.gif)
@@ -9,4 +9,4 @@ Steps to use
     - pandas <pre><code>pip install pandas</pre></code> or <pre><code>conda install pandas</pre></code>
 - Open PowerShell / Terminal in your system and navigate to the location of the script
     <pre><code>cd path/to/file</code></pre>
-- Run <pre><code>python drm.py "YOUR TICKER"</pre></code>
+- Run <pre><code>python main.py -h</pre></code> for detailed usage info

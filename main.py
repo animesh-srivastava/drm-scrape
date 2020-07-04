@@ -42,7 +42,7 @@ def get_data(ticker,start,end):
         pass
 
 def Main():
-    parser = argparse.ArgumentParser(prog='A small client to scrape historical data of stock prices from NSE website. Head over to www.github.com/animesh-srivastava/drm-scrape for more information.')
+    parser = argparse.ArgumentParser(prog='A small client to scrape historical data of stock prices from Yahoo Finance website.')
     parser.add_argument("symbol", help="The company symbol or ticker.", type=str)
     parser.add_argument("-p","--period",help="The period for which data is required. Following methods work - 3d for three days, 2w for two weeks, 3m for three months and 5y for five years.",type=str)
     parser.add_argument('--version', '-v', action='version', version='%(prog)s 2.0.1')
